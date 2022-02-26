@@ -19,6 +19,13 @@ def scrape_and_save_quotes(
         current_dir: str,
         cols: typing.List[str]
 ) -> None:
+    """
+    Scrape quotes and character names in Final Fantasy 7
+    and save as a csv
+    :param current_dir: directory to save quotes in
+    :param cols: column headers for the csv
+    :return: Nothing, just save data to a csv
+    """
     # read text file containing names of the nine AVALANCHE members
     heroes_txt_path = os.path.join(current_dir, "input_files", 'heroes.txt')
     urls_txt_path = os.path.join(current_dir, "input_files", 'urls.txt')
@@ -53,6 +60,14 @@ def scrape_url_and_update_records(
         cols: typing.List[str],
         heroes: typing.List[str],
 ) -> pd.DataFrame:
+    """
+    Scrape quotes and character names from one URL
+    :param url: URL for link being scraped
+    :param scrape_delay: time delay between attempts at scraping URL
+    :param cols: column headers for the csv
+    :param heroes: names of the party members
+    :return: dataframe with quotes and name of who said it
+    """
     logging.info(f"Scraping quotes from:\n{url}")
     sleep(scrape_delay)
     page = requests.get(url)
@@ -83,11 +98,18 @@ def dataframe_from_quote_table(
         quote_table,
         cols: typing.List[str]
 ) -> pd.DataFrame:
+    """
+    Convert contents of an HTML table's worth of
+    quotes to
+    :param quote_table: contents of HTML table with
+    quotes and speaker's names
+    :param cols: column headers for the csv
+    :return: dataframe containing quotes and speaker's name
+    """
     df_rows = []
 
     for quote in quote_table:
-        table = quote
-        for row in table.find_all('tr'):
+        for row in quote.find_all('tr'):
             columns = row.find_all('td')
             column_check = [
                 columns[0].find('p', class_="n d"),
@@ -103,13 +125,3 @@ def dataframe_from_quote_table(
         return pd.concat(df_rows)
     else:
         return pd.DataFrame(columns=cols)
-
-
-if __name__ == "__main__":
-    WORKING_DIR = r'C:\Users\belgi\PycharmProjects\ff7_quotes'
-    cols = ["name", "quote"]
-
-    scrape_and_save_quotes(
-        current_dir=WORKING_DIR,
-        cols=cols
-    )

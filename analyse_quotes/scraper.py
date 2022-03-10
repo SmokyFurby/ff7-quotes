@@ -1,8 +1,3 @@
-"""
-Author: Belgin Seymenoglu
-Source of in-game text: http://letao.is-a-geek.net
-Please do not use this software or any of its output for commercial gain
-"""
 import logging
 import typing
 
@@ -17,15 +12,18 @@ from analyse_quotes.utils import read_txt_lines
 
 def scrape_and_save_quotes(
         current_dir: str,
-        cols: typing.List[str]
+        cols: typing.List[str],
+        csv_file_name: str
 ) -> None:
     """
     Scrape quotes and character names in Final Fantasy 7
     and save as a csv
     :param current_dir: directory to save quotes in
     :param cols: column headers for the csv
+    :param csv_file_name: name of csv file we will save quotes in
     :return: Nothing, just save data to a csv
     """
+    print("Beginning to scrape quotes.")
     # read text file containing names of the nine AVALANCHE members
     heroes_txt_path = os.path.join(current_dir, "input_files", 'heroes.txt')
     urls_txt_path = os.path.join(current_dir, "input_files", 'urls.txt')
@@ -48,10 +46,11 @@ def scrape_and_save_quotes(
 
     df_final = pd.concat(df_list)
 
-    save_path = os.path.join(current_dir, "data", 'FF7quotes.csv')
+    save_path = os.path.join(current_dir, "data", csv_file_name)
 
     # export to CSV
     df_final.to_csv(save_path, index=None)
+    print("Scraped quotes have been saved.")
 
 
 def scrape_url_and_update_records(

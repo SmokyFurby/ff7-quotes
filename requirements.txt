@@ -3,3 +3,4 @@ bs4~=0.0.1
 beautifulsoup4~=4.10.0
 pandas~=1.4.0
 spacy~=3.2.1
+profanity-filter2==1.4.3

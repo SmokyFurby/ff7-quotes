@@ -1,4 +1,3 @@
-import os
 
-current_dir = os.getcwd()
+csv_file_name = "FF7quotes.csv"
 cols = ["name", "quote"]

@@ -25,11 +25,14 @@ def filter_heroes(
     )
 
     for hero in heroes:
+        print(f"# {hero}")
         character_lines = quote_df[quote_df.name == hero]
 
-        print(f"# {hero}")
-        print(
-            len(
-                character_lines[character_lines.is_profane]
-            )
+        number_swear_lines = len(
+            character_lines[character_lines.is_profane]
         )
+
+        swear_ratio = number_swear_lines / len(character_lines)
+
+        print(f"They swore {number_swear_lines} times in the game")
+        print(f"Swear ratio: {swear_ratio}")

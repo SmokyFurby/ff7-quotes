@@ -7,10 +7,10 @@ from analyse_quotes.utils import read_txt_lines
 def load_quotes(
         current_dir: str,
         csv_file: str
-) -> typing.Tuple[pd.DataFrame, typing.List[str], typing.List[str]]:
+) -> typing.Tuple[pd.DataFrame, typing.List[str]]:
     """
     Load the csv containing scraped quotes
-    :param current_dir: psth to current working directory
+    :param current_dir: path to current working directory
     :param csv_file: name of csv file containing quotes
     :return: dataframe containing quotes, the list of names of the
     heroes and list of test swear words
@@ -25,13 +25,7 @@ def load_quotes(
         "input_files",
         "heroes.txt"
     )
-    words_txt_path = os.path.join(
-        current_dir,
-        "input_files",
-        "words.txt"
-    )
 
     heroes = read_txt_lines(heroes_txt_path)
-    words = read_txt_lines(words_txt_path)
 
-    return df, heroes, words
+    return df, heroes
